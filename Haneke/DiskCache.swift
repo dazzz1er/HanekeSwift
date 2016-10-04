@@ -171,13 +171,14 @@ open class DiskCache {
         let fileManager = FileManager.default
         let previousAttributes : [FileAttributeKey: Any]? = try? fileManager.attributesOfItem(atPath: path)
         
-        if (!fileManager.fileExists(atPath: path)) {
+        // Do not use this, it generates error - instead force re-creation of Shared cache(s) if required manually
+        /*if (!fileManager.fileExists(atPath: path)) {
             do {
                 try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
             } catch {
                 print("error re-creating directory", error as NSError)
             }
-        }
+        }*/
         
         do {
             try data.write(to: URL(fileURLWithPath: path), options: Data.WritingOptions.atomicWrite)
